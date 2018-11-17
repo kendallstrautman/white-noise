@@ -1,0 +1,63 @@
+
+
+body {
+  height: 100%;
+  background-color: #000C26;
+  color: transparent;
+  font-family: helvetica;
+}
+
+h1 {
+  color: white;
+  position: fixed;
+  left: 47vw;
+  top: 10%;
+  font-size: 20px;
+}
+
+h2 {
+  color: white;
+  position: fixed;
+  bottom: 10%;
+  left: 49vw;
+  font-size: 20px;
+}
+
+div.centerWrap {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+}
+
+div.ballSac {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  height: 110px;
+  width: 400px;
+}
+
+.ball {
+  height: 100px;
+  width: 100px;
+  border-radius: 50%;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+div.ball1 {
+  background-color: #5E3C2F;
+}
+
+div.ball2 {
+  background-color: #F262A2;
+}
+
+div.ball3 {
+  background-color: #F3E5E0;
+}
