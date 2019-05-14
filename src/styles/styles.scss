@@ -1,0 +1,12 @@
+//BASE---------------------
+@import '../../node_modules/normalize.css/normalize.css';
+@import './base/mixins';
+@import './base/settings';
+@import './base/base';
+@import './base/animations';
+//COMPONENTS---------------
+@import './components/rootapp';
+@import './components/noise';
+@import './components/footer'
+//SLICES--------------------
+

@@ -1,0 +1,38 @@
+//Typography--root of 10 (think in px/10)-----
+
+@mixin fluid-type($min, $max) {
+  font-size: calc(#{$min}px + (#{$max} - #{$min}) * ((100vw - 320px) / (2560 - 320)));
+}
+
+//vendor prefixes-----------------------------
+
+@mixin prefixer($property, $value, $webkit:true, $moz:true, $ms:true) {
+  @if $webkit {-webkit-#{$property}: $value;}
+  @if $moz {-moz-#{$property}: $value;}
+  @if $ms {-moz-#{$property}: $value;}
+}
+
+@mixin flexbox {
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -webkit-flex;
+  display: flex;
+}
+
+//mediaqueries-------------------------------
+
+@mixin media-min($width) {
+  @media only screen and (min-width: #{$width}) {
+    @content;
+  }
+}
+
+@mixin media-orientation($min-width, $max-width, $orientation) {
+  @media only screen 
+    and (min-width: #{$min-width}) 
+    and (max-width: #{$max-width})
+    and (orientation: #{$orientation}) {
+      @content;
+  }
+}
