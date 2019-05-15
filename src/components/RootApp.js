@@ -13,18 +13,23 @@ const RootApp = () => {
   });
   const [playing, setPlaying] = useState(true);
   const [colorPlaying, setColorPlaying] = useState(null);
-  const toggle = e => {
-    const i = Object.keys(noises).indexOf(e.target.id);
+  const toggleSound = e => {
+    //get index & value of noise/color
+    const i = Object.keys(noises).indexOf(e.target.classList[0]);
     const noisePlaying = Object.values(noises)[i];
+    console.log(noisePlaying);
     const color = Object.keys(noises)[i];
     setColorPlaying(color);
+    //pause all other noises
     Object.values(noises).map(noise => {
       noise !== noisePlaying && noise.pause();
     });
+    //if the color changed, play new color
     if (color !== colorPlaying) {
       noisePlaying.play();
       setPlaying(false);
     } else {
+      //toggle play/pause
       if (playing) {
         setPlaying(false);
         noisePlaying.play();
@@ -39,7 +44,7 @@ const RootApp = () => {
       <section className="noises">
         {Object.keys(noises).map(noise => {
           return (
-            <div onClick={toggle}>
+            <div className={noise} key={noise} onClick={toggleSound}>
               <Noise color={noise} />
             </div>
           );
