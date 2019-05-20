@@ -1,0 +1,44 @@
+
+html {
+  //sets rem to base 10 system like pixels
+  font-size: 62.5%;
+  //for firefox scroll
+  scrollbar-width: none;
+  line-height: 0;
+}
+
+
+body {
+  width: 100vw;
+  height: 100vh;
+  background-color: #000715;
+  font-family: 'Helvetica Neue', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', sans-serif;
+}
+
+h1, h2, p, img, div, button, a, figure, summary, section, nav, main, figcaption, article {
+  margin: 0;
+  padding: 0;
+}
+
+h1,h2 {
+  font-weight: normal;
+}
+
+::selection {
+  background-color: none;
+  color:$dark-grey;
+}
+
+button:disabled {
+  cursor: default;
+}
+
+
+br {
+  line-height: 1.667;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}

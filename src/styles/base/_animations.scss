@@ -1,0 +1,148 @@
+//blanket fade --------------------
+@mixin fade($opacity: 1) {
+  @include prefixer(transition, opacity 450ms ease-out, true ,false ,false );
+  @include prefixer(transform-style, preserve-3d, true, false, false);
+  @include prefixer(backface-visibility, hidden, true, false, false);
+  opacity: $opacity;
+  transition: opacity 450ms ease-out;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+.is--active {
+  @include fade(1);
+ }
+ 
+.animate {
+  @include fade(0);
+ }
+//slider&gallery transform ----------
+.transform {
+  @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+  @include prefixer(transform, translate3d(19px, 0, 0), true ,true ,false);
+  transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+  transform: translate3d(12.5vw, 0, 0);
+  &.is--transform {
+    @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+    @include prefixer(transform, translate3d(0, 0, 0), true ,true ,false);
+    transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@include media-min($iphoneSE) {
+  .transform {
+    @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+    @include prefixer(transform, translate3d(17px, 0, 0), true ,true ,false);
+    transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+    transform: translate3d(12.5vw, 0, 0);
+    &.is--transform {
+      @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+      @include prefixer(transform, translate3d(0, 0, 0), true ,true ,false);
+      transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+@include media-min($ipad) {
+  .transform {
+    @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+    @include prefixer(transform, translate3d(8.333vw, 0, 0), true ,true ,false);
+    transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+    transform: translate3d(8.333vw, 0, 0);
+    &.is--transform {
+      @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false,false );
+      @include prefixer(transform, translate3d(0, 0, 0), true ,true ,false);
+      transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+      transform: translate3d(0, 0, 0);
+    }
+  }
+}
+@include media-min($desktop) {
+  .transform {
+    @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false ,false );
+    @include prefixer(transform, translate3d(9.375vw, 0, 0), true ,true ,false);
+    transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+    transform: translate3d(9.375vw, 0, 0);
+    &.is--transform {
+      @include prefixer(transition, transform 800ms cubic-bezier(.6, 0, .2, 1), true ,false,false );
+      transition: transform 800ms cubic-bezier(.6, 0, .2, 1);
+    }
+    &.pano-slider {
+      &.is--transform {
+        @include prefixer(transform, translate3d(3.125vw, 0, 0), true ,true ,false);
+        transform: translate3d(3.125vw, 0, 0);
+      }
+    }
+    &.pano-slider {
+      &.is--transform:hover {
+        @include prefixer(transition, transform 400ms cubic-bezier(.1, 0, .2, 1), true ,false,false );
+        @include prefixer(transform, translate3d(0, 0, 0), true ,true ,false);
+        transition: transform 400ms cubic-bezier(.1, 0, .2, 1);
+        transform: translate3d(0, 0, 0);
+      }
+    }
+    &.slice-slider {
+      &.is--transform {
+        @include prefixer(transform, translate3d(0, 0, 0), true ,true ,false);
+        transform: translate3d(0, 0, 0); 
+      }
+    }
+    
+  }
+}
+//backup fade for all pages------
+.--isLoaded {
+  -webkit-animation: fade 400ms ease-out;
+  animation: fade 400ms ease-out;
+}
+@-webkit-keyframes fade {
+  0%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes fade {
+  0%{
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+//home page parallax-----------------
+.--parallax {
+  // transform: translate3d(0px, -98vh, 1px) scale(.5);
+  @include media-min($desktop) {
+    @include prefixer(transform, translateZ(-1px) scale(1.5), true ,true ,false);
+    @include prefixer(transform-origin, center, true ,true ,false);
+    transform: translateZ(-1px) scale(1.5);
+    transform-origin: center;
+    z-index: -1;
+  }
+}
+
+.parallax--wrap {
+  @include media-min($desktop) {
+    @include prefixer(transform-style, preserve-3d, true ,true ,false);
+    height: 100vh;
+    width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto;
+    perspective: 2px;
+    transform-style: preserve-3d;
+  }
+}
+
+//arrow bounce--------------------------
+@-webkit-keyframes bounce {
+  0%{transform: translateY(0px); animation-timing-function: cubic-bezier(.66, 0, .74, 1); }
+  43%{transform: translateY(-4px); animation-timing-function: cubic-bezier(.26, 0, .34, 1);}
+  86%{transform: translateY(0px); animation-timing-function: cubic-bezier(0, 0, .34, 1);}
+}
+@keyframes bounce {
+  0%{transform: translateY(0px); animation-timing-function: cubic-bezier(.66, 0, .74, 1); }
+  43%{transform: translateY(-4px); animation-timing-function: cubic-bezier(.26, 0, .34, 1);}
+  86%{transform: translateY(0px); animation-timing-function: cubic-bezier(0, 0, .34, 1);}
+}
