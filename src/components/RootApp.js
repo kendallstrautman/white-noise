@@ -4,6 +4,7 @@ import TimerButton from "./TimerButton";
 import AudioButton from "./AudioButton";
 
 const RootApp = () => {
+  //audio context setup-------------------------------------------------------------
   const [audioContext] = useState(
     new (window.AudioContext || window.webkitAudioContext)()
   );
@@ -25,21 +26,26 @@ const RootApp = () => {
     return function toggleSample(isPlay) {
       isPlay ? sampleSource.start() : sampleSource.stop();
     };
-    // return sampleSource;
   };
+  //stateful noise data & instantiation----------------------------------------------
   const [noises, setNoises] = useState({
-    brown: setupAudio("../assets/brown.wav").then(sample =>
+    brown: setupAudio("../assets/brown.mp3").then(sample =>
       createSample(sample)
     ),
-    pink: setupAudio("../assets/pink.mp3"),
-    white: setupAudio("../assets/white-noise.mp3"),
-    blue: setupAudio("../assets/blue.mp3"),
-    violet: setupAudio("../assets/purple.mp3"),
-    grey: setupAudio("../assets/gray.mp3")
+    pink: setupAudio("../assets/pink.mp3").then(sample => createSample(sample)),
+    white: setupAudio("../assets/white.mp3").then(sample =>
+      createSample(sample)
+    ),
+    blue: setupAudio("../assets/blue.mp3").then(sample => createSample(sample)),
+    violet: setupAudio("../assets/violet.mp3").then(sample =>
+      createSample(sample)
+    ),
+    grey: setupAudio("../assets/grey.mp3").then(sample => createSample(sample))
   });
   const [playing, setPlaying] = useState(true);
   const [colorPlaying, setColorPlaying] = useState(null);
   const [noisePlaying, setNoisePlaying] = useState(null);
+  //handle all pause/play of noises------------------------------------------------
   const toggleSound = e => {
     //get index & value of noise/color
     const i = Object.keys(noises).indexOf(e.target.classList[0]);
@@ -47,47 +53,45 @@ const RootApp = () => {
     const color = Object.keys(noises)[i];
     setColorPlaying(color);
     setNoisePlaying(noise);
-    setNoises({ ...noises });
-
-    //pause all other noises
-    // Object.values(noises).map(noise => {
-    //   noise !== noisePlaying && noise.pause();
-    // });
-    //if the color changed, play new color
-    if (playing) {
+    //if the color changed, play new color & pause prev
+    if (color !== colorPlaying) {
       setPlaying(false);
-      // audioContext.resume();
-      console.log(noises);
+      if (noisePlaying) {
+        noisePlaying && noisePlaying.then(toggleSample => toggleSample(false));
+        setNoises({
+          ...noises,
+          [colorPlaying]: setupAudio("../assets/" + colorPlaying + ".mp3").then(
+            sample => createSample(sample)
+          )
+        });
+      }
       noise.then(toggleSample => toggleSample(true));
     } else {
-      setPlaying(true);
-      // audioContext.suspend();
-      noise.then(toggleSample => toggleSample(false));
-      setNoises({
-        ...noises,
-        [color]: setupAudio("../assets/" + color + ".wav").then(sample =>
-          createSample(sample)
-        )
-      });
+      //regular play/pause toggle
+      if (playing) {
+        setPlaying(false);
+        console.log("playing");
+        noise.then(toggleSample => toggleSample(true));
+      } else {
+        setPlaying(true);
+        noise.then(toggleSample => toggleSample(false));
+        setNoises({
+          ...noises,
+          [color]: setupAudio("../assets/" + color + ".mp3").then(sample =>
+            createSample(sample)
+          )
+        });
+      }
     }
-    // if (color !== colorPlaying) {
-    //   noisePlaying.then(sample => playSample(sample));
-    //   setPlaying(false);
-    // } else {
-    //   //toggle play/pause
-    //   if (playing) {
-    //     setPlaying(false);
-    //     noisePlaying.then(sample => playSample(sample));
-    //   } else {
-    //     setPlaying(true);
-    //     // noisePlaying.then(sample => playSample(false, sample));
-    //   }
-    // }
   };
-  useEffect(() => {
-    // console.log(noises);
-    // noises.pink.then(sample => playSample(sample));
-  });
+  //timer stuff - TBD------------------------------------------------------
+  const toggleTimer = () => {
+    console.log("timer");
+  };
+  const toggleAudio = () => {
+    console.log("will handle audio setting here");
+  };
+  //rendering---------------------------------------------------------------
   const createNoises = () => {
     return (
       <section className="noises">
@@ -100,12 +104,6 @@ const RootApp = () => {
         })}
       </section>
     );
-  };
-  const toggleTimer = () => {
-    console.log("timer");
-  };
-  const toggleAudio = () => {
-    console.log("will handle audio setting here");
   };
   return (
     <main className="main">
@@ -125,84 +123,3 @@ const RootApp = () => {
 };
 
 export default RootApp;
-
-// import React, { useState } from "react";
-// import Noise from "./Noise";
-// import TimerButton from "./TimerButton";
-// import AudioButton from "./AudioButton";
-
-// const RootApp = () => {
-//   const [noises] = useState({
-//     brown: new Audio(require("../assets/brown.wav")),
-//     pink: new Audio(require("../assets/pink.mp3")),
-//     white: new Audio(require("../assets/white-noise.mp3")),
-//     blue: new Audio(require("../assets/blue.mp3")),
-//     violet: new Audio(require("../assets/purple.mp3")),
-//     grey: new Audio(require("../assets/gray.mp3"))
-//   });
-//   const [playing, setPlaying] = useState(true);
-//   const [colorPlaying, setColorPlaying] = useState(null);
-//   const toggleSound = e => {
-//     //get index & value of noise/color
-//     const i = Object.keys(noises).indexOf(e.target.classList[0]);
-//     const noisePlaying = Object.values(noises)[i];
-//     const color = Object.keys(noises)[i];
-//     setColorPlaying(color);
-//     //pause all other noises
-//     Object.values(noises).map(noise => {
-//       noise !== noisePlaying && noise.pause();
-//     });
-//     //if the color changed, play new color
-//     if (color !== colorPlaying) {
-//       noisePlaying.loop = true;
-//       noisePlaying.play();
-//       setPlaying(false);
-//     } else {
-//       //toggle play/pause
-//       if (playing) {
-//         setPlaying(false);
-//         noisePlaying.loop = true;
-//         noisePlaying.play();
-//       } else {
-//         setPlaying(true);
-//         noisePlaying.pause();
-//       }
-//     }
-//   };
-//   const createNoises = () => {
-//     return (
-//       <section className="noises">
-//         {Object.keys(noises).map(noise => {
-//           return (
-//             <div className={noise} key={noise} onClick={toggleSound}>
-//               <Noise color={noise} />
-//             </div>
-//           );
-//         })}
-//       </section>
-//     );
-//   };
-//   const toggleTimer = () => {
-//     console.log("timer");
-//   };
-//   const toggleAudio = () => {
-//     console.log("will handle audio setting here");
-//   };
-//   return (
-//     <main className="main">
-//       {createNoises()}
-//       <footer>
-//         <div className="icons">
-//           <div onClick={toggleTimer}>
-//             <TimerButton />
-//           </div>
-//           <div onClick={toggleAudio}>
-//             <AudioButton />
-//           </div>
-//         </div>
-//       </footer>
-//     </main>
-//   );
-// };
-
-// export default RootApp;
