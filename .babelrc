@@ -4,6 +4,7 @@
       "targets": {
         "browsers": "last 2 versions"
       },
+      "useBuiltIns": "entry",
       "loose":true,
       "modules": false
     }],
