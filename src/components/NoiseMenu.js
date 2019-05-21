@@ -17,6 +17,7 @@ const NoiseMenu = () => {
     return sample;
   };
   const createSample = audioBuffer => {
+    //persistant sample ref stored in the closure for toggling
     const sampleSource = audioContext.createBufferSource();
     sampleSource.buffer = audioBuffer;
     sampleSource.connect(audioContext.destination);
@@ -56,10 +57,10 @@ const NoiseMenu = () => {
     if (color !== colorPlaying) {
       setPlaying(false);
       if (noisePlaying) {
-        noisePlaying && noisePlaying.then(toggleSample => toggleSample(false));
+        noisePlaying.then(toggleSample => toggleSample(false));
         setNoises({
           ...noises,
-          [colorPlaying]: setupAudio("../assets/" + colorPlaying + ".wav").then(
+          [colorPlaying]: setupAudio(`../assets/${colorPlaying}.wav`).then(
             sample => createSample(sample)
           )
         });
@@ -76,7 +77,7 @@ const NoiseMenu = () => {
         //reset the noise instance after stopping
         setNoises({
           ...noises,
-          [color]: setupAudio("../assets/" + color + ".wav").then(sample =>
+          [color]: setupAudio(`../assets/${color}.wav`).then(sample =>
             createSample(sample)
           )
         });
