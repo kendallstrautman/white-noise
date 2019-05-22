@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Noise from "./Noise";
+import noiseData from "../config.js";
 
 const NoiseMenu = () => {
   //audio context setup-------------------------------------------------------------
@@ -27,19 +28,7 @@ const NoiseMenu = () => {
     };
   };
   //stateful noise data & instantiation----------------------------------------------
-  const [noises, setNoises] = useState({
-    brown: setupAudio("../assets/brown.wav").then(sample =>
-      createSample(sample)
-    ),
-    pink: setupAudio("../assets/pink.wav").then(sample => createSample(sample)),
-    white: setupAudio("../assets/white.wav").then(sample =>
-      createSample(sample)
-    ),
-    blue: setupAudio("../assets/blue.wav").then(sample => createSample(sample)),
-    violet: setupAudio("../assets/violet.wav").then(sample =>
-      createSample(sample)
-    )
-  });
+  const [noises] = useState(noiseData);
   const [colorPlaying, setColorPlaying] = useState(null);
   const updateColorPlaying = e => {
     const i = Object.keys(noises).indexOf(e.target.classList[0]);
