@@ -9,7 +9,7 @@ const Noise = props => {
   const [canPause, setCanPause] = useState(false);
 
   const isPlaying = props => {
-    return props.colorPlaying == props.color && true;
+    return props.colorPlaying == props.color ? true : false;
   };
   const handleSound = props => {
     if (isPlaying(props) && !canPause) {
@@ -28,9 +28,25 @@ const Noise = props => {
       );
     }
   };
-
+  const handleStyles = props => {
+    const noiseElem = document.getElementById(`${props.color}`);
+    if (isPlaying(props) && props.isPlaying) {
+      //add the playing class, make it big
+      noiseElem.classList.add("--isPlaying");
+      noiseElem.classList.remove("--isBlur");
+    } else if (!isPlaying(props) && props.isPlaying) {
+      //add the blur class to others
+      noiseElem.classList.add("--isBlur");
+      noiseElem.classList.remove("--isPlaying");
+    } else {
+      //if nothing is playing..they go back to original
+      noiseElem.classList.remove("--isPlaying");
+      noiseElem.classList.remove("--isBlur");
+    }
+  };
   useEffect(() => {
     handleSound(props);
+    handleStyles(props);
   });
 
   return (

@@ -3,8 +3,14 @@
   h1 {
     font-size: 22px;
     font-weight: normal;
-   
+    &.--isPlaying {
+      font-size: 40px;
+    }
+    &.--isBlur {
+      filter: blur(1px);
+    }
   }
+
 }
 .brown {
   color: #654538;
