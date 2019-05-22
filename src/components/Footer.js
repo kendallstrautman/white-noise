@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import AudioButton from "./AudioButton";
 import TimerButton from "./TimerButton";
 
 const Footer = () => {
-  //timer stuff - TBD------------------------------------------------------
+  const [isVisible, setIsVisible] = useState(false);
   const toggleTimer = () => {
-    console.log("timer");
+    const timer = document.querySelector(".timer");
+    if (!isVisible) {
+      timer.classList.remove("--isHidden");
+      timer.classList.add("--isActive");
+      setIsVisible(true);
+    } else {
+      timer.classList.remove("--isActive");
+      timer.classList.add("--isHidden");
+      setIsVisible(false);
+    }
   };
   const toggleAudio = () => {
     console.log("will handle audio setting here");
