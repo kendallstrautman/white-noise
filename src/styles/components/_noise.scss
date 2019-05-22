@@ -3,11 +3,17 @@
   h1 {
     font-size: 22px;
     font-weight: normal;
+    @include prefixer(transition,all 100ms ease-out, true, false, false );
+    transition: all 100ms ease-out;
     &.--isPlaying {
       font-size: 40px;
+      @include prefixer(transition,all 100ms ease-out, true, false, false );
+      transition: all 100ms ease-out;
     }
     &.--isBlur {
       filter: blur(1px);
+      @include prefixer(transition,all 100ms ease-out, true, false, false );
+      transition: all 100ms ease-out;
     }
   }
 
