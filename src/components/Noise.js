@@ -8,15 +8,15 @@ const Noise = props => {
   );
   const [canPause, setCanPause] = useState(false);
 
-  const isPlaying = props => {
+  const thisIsPlaying = props => {
     return props.colorPlaying == props.color ? true : false;
   };
   const handleSound = props => {
-    if (isPlaying(props) && !canPause) {
+    if (thisIsPlaying(props) && !canPause) {
       const play = true;
       setCanPause(true);
       noise.then(toggleSample => toggleSample(play));
-    } else if (!isPlaying(props) && canPause) {
+    } else if (!thisIsPlaying(props) && canPause) {
       const pause = false;
       setCanPause(false);
       noise.then(toggleSample => toggleSample(pause));
@@ -30,10 +30,10 @@ const Noise = props => {
   };
   const handleStyles = props => {
     const noiseElem = document.getElementById(`${props.color}`);
-    if (isPlaying(props) && props.isPlaying) {
+    if (thisIsPlaying(props) && props.anyNoisePlaying) {
       noiseElem.classList.add("--isPlaying");
       noiseElem.classList.remove("--isBlur");
-    } else if (!isPlaying(props) && props.isPlaying) {
+    } else if (!thisIsPlaying(props) && props.anyNoisePlaying) {
       noiseElem.classList.add("--isBlur");
       noiseElem.classList.remove("--isPlaying");
     } else {

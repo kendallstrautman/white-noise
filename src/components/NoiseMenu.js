@@ -52,7 +52,7 @@ const NoiseMenu = () => {
             <div className={noise} key={noise} onClick={updateColorPlaying}>
               <Noise
                 color={noise}
-                isPlaying={isPlaying}
+                anyNoisePlaying={isPlaying}
                 colorPlaying={colorPlaying}
                 setupAudio={setupAudio}
                 createSample={createSample}
