@@ -12,8 +12,6 @@
       transform: scale(1.5);
       @include prefixer(transition,all 200ms ease-out, true, false, false );
       transition: all 200ms ease-out;
-      transform-style: preserve-3d;
-      backface-visibility: hidden;
     }
     &.--isBlur {
       -webkit-filter: blur(1px);
