@@ -9,7 +9,6 @@ const Noise = props => {
   };
   const handleSound = props => {
     if (thisIsPlaying(props) && !canPause) {
-      console.log("color playing " + props.color);
       setIsPlaying(true);
       setCanPause(true);
     } else if (!thisIsPlaying(props) && canPause) {
@@ -34,7 +33,6 @@ const Noise = props => {
     handleSound(props);
     handleStyles(props);
   });
-
   return (
     <div className="noise">
       <ReactHowler
