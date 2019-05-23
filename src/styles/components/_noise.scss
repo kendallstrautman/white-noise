@@ -3,17 +3,21 @@
   h1 {
     font-size: 22px;
     font-weight: normal;
-    @include prefixer(transition,all 100ms ease-out, true, false, false );
-    transition: all 100ms ease-out;
+    @include prefixer(transition,all 200ms ease-out, true, false, false );
+    transition: 200ms -webkit-filter ease-out;
+    transition: all 200ms ease-out;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
     &.--isPlaying {
-      font-size: 40px;
-      @include prefixer(transition,all 100ms ease-out, true, false, false );
-      transition: all 100ms ease-out;
+      transform: scale(1.5);
+      @include prefixer(transition,all 200ms ease-out, true, false, false );
+      transition: all 200ms ease-out;
     }
     &.--isBlur {
+      -webkit-filter: blur(1px);
       filter: blur(1px);
-      @include prefixer(transition,all 100ms ease-out, true, false, false );
-      transition: all 100ms ease-out;
+      @include prefixer(transition,all 200ms ease-out, true, false, false );
+      transition: all 200ms ease-out;
     }
   }
 

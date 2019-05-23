@@ -3,30 +3,6 @@ import Noise from "./Noise";
 import noiseData from "../config.js";
 
 const NoiseMenu = () => {
-  //audio context setup-------------------------------------------------------------
-  const [audioContext] = useState(
-    new (window.AudioContext || window.webkitAudioContext)()
-  );
-  const getAudioFile = async (audioContext, filepath) => {
-    const response = await fetch(filepath);
-    const arrayBuffer = await response.arrayBuffer();
-    const audioBuffer = await audioContext.decodeAudioData(arrayBuffer);
-    return audioBuffer;
-  };
-  const setupAudio = async filepath => {
-    const sample = await getAudioFile(audioContext, filepath);
-    return sample;
-  };
-  const createSample = audioBuffer => {
-    //persistant sample ref stored in the closure for toggling
-    const sampleSource = audioContext.createBufferSource();
-    sampleSource.buffer = audioBuffer;
-    sampleSource.connect(audioContext.destination);
-    sampleSource.loop = true;
-    return function toggleSample(isPlay) {
-      isPlay ? sampleSource.start() : sampleSource.stop();
-    };
-  };
   //stateful noise data-------------------------------------------------------------
   const [colorPlaying, setColorPlaying] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -54,8 +30,6 @@ const NoiseMenu = () => {
                 color={noise}
                 anyNoisePlaying={isPlaying}
                 colorPlaying={colorPlaying}
-                setupAudio={setupAudio}
-                createSample={createSample}
               />
             </div>
           );
