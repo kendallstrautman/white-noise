@@ -1,10 +1,10 @@
 //blanket fade --------------------
 @mixin fade($opacity: 1) {
-  @include prefixer(transition, opacity 450ms ease-out, true ,false ,false );
+  @include prefixer(transition, opacity 350ms ease-out, true ,false ,false );
   @include prefixer(transform-style, preserve-3d, true, false, false);
   @include prefixer(backface-visibility, hidden, true, false, false);
   opacity: $opacity;
-  transition: opacity 450ms ease-out;
+  transition: opacity 350ms ease-out;
   transform-style: preserve-3d;
   backface-visibility: hidden;
 }
@@ -12,7 +12,7 @@
   @include fade(1);
  }
  
-.animate {
+.is--hidden {
   @include fade(0);
  }
 //slider&gallery transform ----------
