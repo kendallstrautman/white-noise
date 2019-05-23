@@ -3,17 +3,22 @@ import AudioButton from "./AudioButton";
 import TimerButton from "./TimerButton";
 
 const Footer = () => {
-  const [isVisible, setIsVisible] = useState(false);
+  const [timerIsVisible, setTimerIsVisible] = useState(false);
   const toggleTimer = () => {
     const timer = document.querySelector(".timer");
-    if (!isVisible) {
+    const noiseMenu = document.querySelector(".noise-menu");
+    if (!timerIsVisible) {
       timer.classList.remove("--isHidden");
       timer.classList.add("--isActive");
-      setIsVisible(true);
+      noiseMenu.classList.remove("is--active");
+      noiseMenu.classList.add("is--hidden");
+      setTimerIsVisible(true);
     } else {
       timer.classList.remove("--isActive");
       timer.classList.add("--isHidden");
-      setIsVisible(false);
+      noiseMenu.classList.remove("is--hidden");
+      noiseMenu.classList.add("is--active");
+      setTimerIsVisible(false);
     }
   };
   const toggleAudio = () => {
