@@ -1,6 +1,7 @@
 .noise {
   margin: 36px;
   h1 {
+    cursor: pointer;
     font-size: 22px;
     font-weight: normal;
     @include prefixer(transition,all 200ms ease-out, true, false, false );

@@ -20,7 +20,7 @@ const NoiseMenu = () => {
     }
   };
   const stopPlaying = () => {
-    //pass in null and stop the noise
+    //send props to kids to handle stop
     setIsPlaying(false);
     setColorPlaying(null);
   };
@@ -29,8 +29,7 @@ const NoiseMenu = () => {
     window.setTimeout(stopPlaying, atTime);
   };
   useEffect(() => {
-    console.log("effect");
-    isPlaying && startTimer(2000);
+    // isPlaying && startTimer(2000);
   });
   //rendering----------------------------------------------------------------------
   const renderNoises = () => {
@@ -45,7 +44,7 @@ const NoiseMenu = () => {
                 colorPlaying={colorPlaying}
               />
             </div>
-          );
+          );                           
         })}
       </div>
     );
