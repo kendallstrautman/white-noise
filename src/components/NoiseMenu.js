@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import Noise from "./Noise";
 import noiseData from "../config.js";
 
-const NoiseMenu = () => {
+const NoiseMenu = props => {
   //stateful noise data-------------------------------------------------------------
   const [colorPlaying, setColorPlaying] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -20,16 +20,22 @@ const NoiseMenu = () => {
     }
   };
   const stopPlaying = () => {
+    console.log("stop playing");
     //send props to kids to handle stop
     setIsPlaying(false);
     setColorPlaying(null);
   };
+  function minutesToMs(minutes) {
+    return minutes * 60000;
+  }
   const startTimer = atTime => {
     console.log("starting timer");
+    atTime = minutesToMs(atTime);
+    console.log(atTime);
     window.setTimeout(stopPlaying, atTime);
   };
   useEffect(() => {
-    // isPlaying && startTimer(2000);
+    isPlaying && props.timerLength > 0 && startTimer(props.timerLength);
   });
   //rendering----------------------------------------------------------------------
   const renderNoises = () => {
@@ -44,7 +50,7 @@ const NoiseMenu = () => {
                 colorPlaying={colorPlaying}
               />
             </div>
-          );                           
+          );
         })}
       </div>
     );
