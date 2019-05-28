@@ -1,31 +1,19 @@
 import React, { useState, useEffect } from "react";
+import ReactHowler from "react-howler";
 
 const Noise = props => {
-  const [noise, setNoise] = useState(
-    props
-      .setupAudio(`../assets/${props.color}.wav`)
-      .then(sample => props.createSample(sample))
-  );
   const [canPause, setCanPause] = useState(false);
-
+  const [isPlaying, setIsPlaying] = useState(false);
   const thisIsPlaying = props => {
     return props.colorPlaying == props.color ? true : false;
   };
   const handleSound = props => {
     if (thisIsPlaying(props) && !canPause) {
-      const play = true;
+      setIsPlaying(true);
       setCanPause(true);
-      noise.then(toggleSample => toggleSample(play));
     } else if (!thisIsPlaying(props) && canPause) {
-      const pause = false;
+      setIsPlaying(false);
       setCanPause(false);
-      noise.then(toggleSample => toggleSample(pause));
-      //reinstantiate noise instance after stopping
-      setNoise(
-        props
-          .setupAudio(`../assets/${props.color}.wav`)
-          .then(sample => props.createSample(sample))
-      );
     }
   };
   const handleStyles = props => {
@@ -45,9 +33,14 @@ const Noise = props => {
     handleSound(props);
     handleStyles(props);
   });
-
   return (
     <div className="noise">
+      <ReactHowler
+        src={`../assets/${props.color}.wav`}
+        playing={isPlaying}
+        loop={true}
+        mute={!isPlaying}
+      />
       <h1 id={props.color} className={props.color}>
         {props.color}
       </h1>
