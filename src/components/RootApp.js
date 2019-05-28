@@ -1,18 +1,18 @@
 import React, { useState } from "react";
-import NoiseMenu from "./NoiseMenu";
-import Timer from "./Timer";
-import Info from "./Info";
-import Footer from "./Footer";
+import NoiseMenu from "./NoiseMenu/NoiseMenu";
+import Timer from "./Timer/Timer";
+import Info from "./Info/Info";
+import Footer from "./Footer/Footer";
 
 const RootApp = () => {
   const [timerLength, setTimerLength] = useState(0);
-  const [isVisible, setIsVisible] = useState("menu");
+  const [tabIsVisible, setTabIsVisible] = useState("menu");
   return (
     <main className="main">
       <NoiseMenu timerLength={timerLength} />
       <Timer timerLength={timerLength} setTimerLength={setTimerLength} />
       <Info />
-      <Footer isVisible={isVisible} setIsVisible={setIsVisible} />
+      <Footer tabIsVisible={tabIsVisible} setTabIsVisible={setTabIsVisible} />
     </main>
   );
 };

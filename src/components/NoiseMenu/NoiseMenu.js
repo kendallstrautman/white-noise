@@ -1,44 +1,47 @@
 import React, { useState, useEffect } from "react";
 import Noise from "./Noise";
-import noiseData from "../config.js";
+import noiseData from "../../config/noise_data.js";
 
 const NoiseMenu = props => {
-  //stateful noise data-------------------------------------------------------------
+  //funcs & state---------------------------------------------------------
   const [colorPlaying, setColorPlaying] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
-  const updateColorPlaying = e => {
+  const [timerIsRunning, setTimerIsRunning] = useState(false);
+
+  function updateColorPlaying(e) {
     const i = Object.keys(noiseData).indexOf(e.target.classList[0]);
+    const currentColor = Object.keys(noiseData)[i];
+
     if (colorPlaying == null) {
       setIsPlaying(true);
-      setColorPlaying(Object.keys(noiseData)[i]);
-    } else if (colorPlaying == Object.keys(noiseData)[i]) {
+      setColorPlaying(currentColor);
+    } else if (colorPlaying == currentColor) {
       setIsPlaying(false);
       setColorPlaying(null);
     } else {
       setIsPlaying(true);
-      setColorPlaying(Object.keys(noiseData)[i]);
+      setColorPlaying(currentColor);
     }
-  };
-  const stopPlaying = () => {
-    console.log("stop playing");
-    //send props to kids to handle stop
+  }
+
+  function killTimer() {
+    //send props to kids to stop playback
     setIsPlaying(false);
     setColorPlaying(null);
-  };
+    setTimerIsRunning(false);
+  }
+
   function minutesToMs(minutes) {
     return minutes * 60000;
   }
-  const startTimer = atTime => {
-    console.log("starting timer");
+
+  function startTimer(atTime) {
+    setTimerIsRunning(true);
     atTime = minutesToMs(atTime);
-    console.log(atTime);
-    window.setTimeout(stopPlaying, atTime);
-  };
-  useEffect(() => {
-    isPlaying && props.timerLength > 0 && startTimer(props.timerLength);
-  });
-  //rendering----------------------------------------------------------------------
-  const renderNoises = () => {
+    window.setTimeout(killTimer, atTime);
+  }
+
+  function renderNoises() {
     return (
       <div className="noises">
         {Object.keys(noiseData).map(noise => {
@@ -54,7 +57,18 @@ const NoiseMenu = props => {
         })}
       </div>
     );
-  };
+  }
+  //Hook-----------------------------------------------------------------
+
+  useEffect(() => {
+    isPlaying &&
+      props.timerLength > 0 &&
+      !timerIsRunning &&
+      startTimer(props.timerLength);
+  });
+
+  //Render---------------------------------------------------------------
+
   return <section className="noise-menu">{renderNoises()}</section>;
 };
 
