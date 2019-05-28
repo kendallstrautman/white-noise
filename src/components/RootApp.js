@@ -9,7 +9,7 @@ const RootApp = () => {
   const [tabIsVisible, setTabIsVisible] = useState("menu");
   return (
     <main className="main">
-      <NoiseMenu timerLength={timerLength} />
+      <NoiseMenu timerLength={timerLength} setTimerLength={setTimerLength} />
       <Timer timerLength={timerLength} setTimerLength={setTimerLength} />
       <Info />
       <Footer tabIsVisible={tabIsVisible} setTabIsVisible={setTabIsVisible} />

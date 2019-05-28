@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Noise from "./Noise";
 import noiseData from "../../config/noise_data.js";
+import PropTypes from "prop-types";
 
 const NoiseMenu = props => {
   //funcs & state---------------------------------------------------------
@@ -28,6 +29,8 @@ const NoiseMenu = props => {
     //send props to kids to stop playback
     setIsPlaying(false);
     setColorPlaying(null);
+    //reset timer from root
+    props.setTimerLength(0);
     setTimerIsRunning(false);
   }
 
@@ -70,6 +73,11 @@ const NoiseMenu = props => {
   //Render---------------------------------------------------------------
 
   return <section className="noise-menu">{renderNoises()}</section>;
+};
+
+NoiseMenu.propTypes = {
+  timerLength: PropTypes.number.isRequired,
+  setTimerLength: PropTypes.func.isRequired
 };
 
 export default NoiseMenu;
