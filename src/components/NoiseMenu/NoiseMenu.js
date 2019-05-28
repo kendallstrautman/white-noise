@@ -74,12 +74,21 @@ const NoiseMenu = props => {
 
   //Render---------------------------------------------------------------
 
-  return <section className="noise-menu">{renderNoises()}</section>;
+  return (
+    <section
+      className={`noise-menu ${
+        props.visibleTab == "menu" ? "--isActive" : "--isHidden"
+      }`}
+    >
+      {renderNoises()}
+    </section>
+  );
 };
 
 NoiseMenu.propTypes = {
   timerLength: PropTypes.number.isRequired,
-  setTimerLength: PropTypes.func.isRequired
+  setTimerLength: PropTypes.func.isRequired,
+  visibleTab: PropTypes.string.isRequired
 };
 
 export default NoiseMenu;

@@ -8,7 +8,11 @@ const Timer = props => {
   }
 
   return (
-    <div className={`timer  ${props.tabIsVisible !== "timer" && "--isHidden"}`}>
+    <div
+      className={`timer  ${
+        props.visibleTab == "timer" ? "--isActive" : "--isHidden"
+      }`}
+    >
       <label>
         Time in Minutes <br />
         <input
@@ -24,7 +28,7 @@ const Timer = props => {
 Timer.propTypes = {
   timerLength: PropTypes.number.isRequired,
   setTimerLength: PropTypes.func.isRequired,
-  tabIsVisible: PropTypes.string.isRequired
+  visibleTab: PropTypes.string.isRequired
 };
 
 export default Timer;

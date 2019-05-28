@@ -6,17 +6,21 @@ import Footer from "./Footer/Footer";
 
 const RootApp = () => {
   const [timerLength, setTimerLength] = useState(0);
-  const [tabIsVisible, setTabIsVisible] = useState("menu");
+  const [visibleTab, setVisibleTab] = useState("menu");
   return (
     <main className="main">
-      <NoiseMenu timerLength={timerLength} setTimerLength={setTimerLength} />
+      <NoiseMenu
+        timerLength={timerLength}
+        setTimerLength={setTimerLength}
+        visibleTab={visibleTab}
+      />
       <Timer
         timerLength={timerLength}
         setTimerLength={setTimerLength}
-        tabIsVisible={tabIsVisible}
+        visibleTab={visibleTab}
       />
-      <Info />
-      <Footer tabIsVisible={tabIsVisible} setTabIsVisible={setTabIsVisible} />
+      <Info visibleTab={visibleTab} />
+      <Footer visibleTab={visibleTab} setVisibleTab={setVisibleTab} />
     </main>
   );
 };

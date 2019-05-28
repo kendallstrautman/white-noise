@@ -1,64 +1,36 @@
 import React from "react";
 import AudioButton from "./AudioButton";
 import TimerButton from "./TimerButton";
+import PropTypes from "prop-types";
 
 const Footer = props => {
   function toggleTimer() {
-    const timer = document.querySelector(".timer");
-    const info = document.querySelector(".info");
-    const noiseMenu = document.querySelector(".noise-menu");
-    if (props.tabIsVisible !== "timer") {
-      timer.classList.remove("--isHidden");
-      timer.classList.add("--isActive");
-      noiseMenu.classList.remove("--isActive");
-      noiseMenu.classList.add("--isHidden");
-      info.classList.remove("--isActive");
-      info.classList.add("--isHidden");
-      props.setTabIsVisible("timer");
-    } else {
-      timer.classList.remove("--isActive");
-      timer.classList.add("--isHidden");
-      info.classList.remove("--isActive");
-      info.classList.add("--isHidden");
-      noiseMenu.classList.remove("--isHidden");
-      noiseMenu.classList.add("--isActive");
-      props.setTabIsVisible("menu");
-    }
+    props.visibleTab !== "timer"
+      ? props.setVisibleTab("timer")
+      : props.setVisibleTab("menu");
   }
   function toggleInfo() {
-    const timer = document.querySelector(".timer");
-    const info = document.querySelector(".info");
-    const noiseMenu = document.querySelector(".noise-menu");
-    if (props.tabIsVisible !== "info") {
-      info.classList.remove("--isHidden");
-      info.classList.add("--isActive");
-      timer.classList.add("--isHidden");
-      timer.classList.remove("--isActive");
-      noiseMenu.classList.remove("--isActive");
-      noiseMenu.classList.add("--isHidden");
-      props.setTabIsVisible("info");
-    } else {
-      info.classList.remove("--isActive");
-      info.classList.add("--isHidden");
-      timer.classList.remove("--isActive");
-      timer.classList.add("--isHidden");
-      noiseMenu.classList.remove("--isHidden");
-      noiseMenu.classList.add("--isActive");
-      props.setTabIsVisible("menu");
-    }
+    props.visibleTab !== "info"
+      ? props.setVisibleTab("info")
+      : props.setVisibleTab("menu");
   }
   return (
-    <footer>
-      <div className="icons">
+    <section className="footer">
+      <footer className="icons">
         <div onClick={toggleTimer}>
           <TimerButton />
         </div>
         <div onClick={toggleInfo}>
           <AudioButton />
         </div>
-      </div>
-    </footer>
+      </footer>
+    </section>
   );
+};
+
+Footer.propTypes = {
+  visibleTab: PropTypes.string.isRequired,
+  setVisibleTab: PropTypes.func.isRequired
 };
 
 export default Footer;
