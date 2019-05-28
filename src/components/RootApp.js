@@ -10,7 +10,11 @@ const RootApp = () => {
   return (
     <main className="main">
       <NoiseMenu timerLength={timerLength} setTimerLength={setTimerLength} />
-      <Timer timerLength={timerLength} setTimerLength={setTimerLength} />
+      <Timer
+        timerLength={timerLength}
+        setTimerLength={setTimerLength}
+        tabIsVisible={tabIsVisible}
+      />
       <Info />
       <Footer tabIsVisible={tabIsVisible} setTabIsVisible={setTabIsVisible} />
     </main>
