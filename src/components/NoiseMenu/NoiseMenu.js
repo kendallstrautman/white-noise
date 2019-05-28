@@ -6,32 +6,32 @@ import PropTypes from "prop-types";
 const NoiseMenu = props => {
   //funcs & state---------------------------------------------------------
   const [colorPlaying, setColorPlaying] = useState(null);
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [timerIsRunning, setTimerIsRunning] = useState(false);
+  const [isNoisePlaying, setIsNoisePlaying] = useState(false);
+  const [isTimerRunning, setIsTimerRunning] = useState(false);
 
   function updateColorPlaying(e) {
     const i = Object.keys(noiseData).indexOf(e.target.classList[0]);
     const currentColor = Object.keys(noiseData)[i];
 
     if (colorPlaying == null) {
-      setIsPlaying(true);
+      setIsNoisePlaying(true);
       setColorPlaying(currentColor);
     } else if (colorPlaying == currentColor) {
-      setIsPlaying(false);
+      setIsNoisePlaying(false);
       setColorPlaying(null);
     } else {
-      setIsPlaying(true);
+      setIsNoisePlaying(true);
       setColorPlaying(currentColor);
     }
   }
 
   function killTimer() {
     //send props to kids to stop playback
-    setIsPlaying(false);
+    setIsNoisePlaying(false);
     setColorPlaying(null);
     //reset timer from root
     props.setTimerLength(0);
-    setTimerIsRunning(false);
+    setIsTimerRunning(false);
   }
 
   function minutesToMs(minutes) {
@@ -39,9 +39,11 @@ const NoiseMenu = props => {
   }
 
   function startTimer(atTime) {
-    setTimerIsRunning(true);
-    atTime = minutesToMs(atTime);
-    window.setTimeout(killTimer, atTime);
+    if (!isTimerRunning) {
+      setIsTimerRunning(true);
+      atTime = minutesToMs(atTime);
+      window.setTimeout(killTimer, atTime);
+    }
   }
 
   function renderNoises() {
@@ -52,7 +54,7 @@ const NoiseMenu = props => {
             <div className={noise} key={noise} onClick={updateColorPlaying}>
               <Noise
                 color={noise}
-                anyNoisePlaying={isPlaying}
+                isNoisePlaying={isNoisePlaying}
                 colorPlaying={colorPlaying}
               />
             </div>
@@ -64,7 +66,7 @@ const NoiseMenu = props => {
   //Hook-----------------------------------------------------------------
 
   useEffect(() => {
-    isPlaying &&
+    isNoisePlaying &&
       props.timerLength > 0 &&
       !timerIsRunning &&
       startTimer(props.timerLength);

@@ -1,51 +1,57 @@
 import React, { useState, useEffect } from "react";
 import ReactHowler from "react-howler";
+import PropTypes from "prop-types";
 
 const Noise = props => {
-  const [canPause, setCanPause] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
-  const thisIsPlaying = props => {
+
+  function thisIsPlaying() {
     return props.colorPlaying == props.color ? true : false;
-  };
-  const handleSound = props => {
-    if (thisIsPlaying(props) && !canPause) {
-      setIsPlaying(true);
-      setCanPause(true);
-    } else if (!thisIsPlaying(props) && canPause) {
-      setIsPlaying(false);
-      setCanPause(false);
-    }
-  };
-  const handleStyles = props => {
-    const noiseElem = document.getElementById(`${props.color}`);
-    if (thisIsPlaying(props) && props.anyNoisePlaying) {
-      noiseElem.classList.add("--isPlaying");
-      noiseElem.classList.remove("--isBlur");
-    } else if (!thisIsPlaying(props) && props.anyNoisePlaying) {
-      noiseElem.classList.add("--isBlur");
-      noiseElem.classList.remove("--isPlaying");
+  }
+
+  function handlePlaySound() {
+    thisIsPlaying() ? setIsPlaying(true) : setIsPlaying(false);
+  }
+
+  function handleActiveStyles() {
+    const thisNoiseElem = document.getElementById(`${props.color}`);
+    if (thisIsPlaying() == true && props.isNoisePlaying == true) {
+      thisNoiseElem.classList.add("--isPlaying");
+      thisNoiseElem.classList.remove("--isBlur");
+    } else if (thisIsPlaying() == false && props.isNoisePlaying == true) {
+      thisNoiseElem.classList.add("--isBlur");
+      thisNoiseElem.classList.remove("--isPlaying");
     } else {
-      noiseElem.classList.remove("--isPlaying");
-      noiseElem.classList.remove("--isBlur");
+      thisNoiseElem.classList.remove("--isPlaying");
+      thisNoiseElem.classList.remove("--isBlur");
     }
-  };
-  useEffect(() => {
-    handleSound(props);
-    handleStyles(props);
-  });
+  }
+
+  function handleActiveState() {
+    handlePlaySound();
+    handleActiveStyles();
+  }
+
+  useEffect(handleActiveState);
+
   return (
     <div className="noise">
       <ReactHowler
         src={`../assets/${props.color}.wav`}
         playing={isPlaying}
         loop={true}
-        mute={!isPlaying}
       />
       <h1 id={props.color} className={props.color}>
         {props.color}
       </h1>
     </div>
   );
+};
+
+Noise.propTypes = {
+  color: PropTypes.string.isRequired,
+  isNoisePlaying: PropTypes.bool.isRequired,
+  colorPlaying: PropTypes.string
 };
 
 export default Noise;
