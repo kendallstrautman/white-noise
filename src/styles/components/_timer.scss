@@ -3,19 +3,46 @@
   flex-direction: column;
   justify-content: center;
   width: 100%;
-  height: 90%;
+  height: 95%;
   position: absolute;
   top: 0;
   left: 0;
-  color: #fff;
+  color: #000;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #000715;
+  background-color: inherit;
 }
 
+.timer--wrap {
+  width: 225px;
+  height: 225px;
+  overflow: visible;
+}
 
+.outer-circle {
+  fill: transparent;
+  overflow: visible !important;
+}
 
+.outer-circle__color {
+  stroke: pink;
+  stroke-width: 2;
+}
+
+.outer-circle__base {
+  transform: rotate(270deg);
+  transform-origin: center;
+  stroke: #F3E5E0;
+  stroke-width: 2;
+  stroke-dasharray: 360;
+  stroke-dashoffset: 0;
+}
+
+.draggable-circle {
+  fill: #F3E5E0;
+  transform-origin: center;
+}
 
 
 
